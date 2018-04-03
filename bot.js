@@ -11,7 +11,7 @@ const OOF = `
 ██║▒▒▒██║   ██║▒▒▒██║   █████╗▒▒
 ██║▒▒▒██║   ██║▒▒▒██║   ██╔══╝▒▒
 ╚██████╔╝   ╚██████╔╝   ██║▒▒▒▒▒
-▒╚═════╝▒   ▒╚═════╝▒   ╚═╝▒▒▒▒▒`;
+▒╚═════╝▒   ▒╚═════╝▒   ╚═╝▒▒▒▒▒`
 
 const YKIHTDITT =
 `⠀⠀⠀⠀⣠⣦⣤⣀
@@ -34,7 +34,7 @@ const YKIHTDITT =
 ⠀⠀⠀⠀⣿⣿⠀⠀⢀⣿⡇
 ⠀⣠⣴⣿⡿⠟⠀⠀⢸⣿⣷
 ⠀⠉⠉⠁⠀⠀⠀⠀⢸⣿⣿⠁
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈`;
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈`
 
 const THINKING = 
 `⠀⠰⡿⠿⠛⠛⠻⠿⣷
@@ -51,7 +51,22 @@ const THINKING =
 ⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡁
 ⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁
 ⠀⠀⠛⢿⣿⣿⣿⣿⣿⣿⡿⠟
-⠀⠀⠀⠀⠀⠉⠉⠉`;
+⠀⠀⠀⠀⠀⠉⠉⠉`
+
+const THINKING2 = 
+`▒▒▒▒▒▒▒▒▄▄▄▄▄▄▄▄▒▒▒▒▒▒▒▒
+▒▒▒▒▒▄█▀▀░░░░░░▀▀█▄▒▒▒▒▒
+▒▒▒▄█▀▄██▄░░░░░░░░▀█▄▒▒▒
+▒▒█▀░▀░░▄▀░░░░▄▀▀▀▀░▀█▒▒
+▒█▀░░░░███░░░░▄█▄░░░░▀█▒
+▒█░░░░░░▀░░░░░▀█▀░░░░░█▒
+▒█░░░░░░░░░░░░░░░░░░░░█▒
+▒█░░██▄░░▀▀▀▀▄▄░░░░░░░█▒
+▒▀█░█░█░░░▄▄▄▄▄░░░░░░█▀▒
+▒▒▀█▀░▀▀▀▀░▄▄▄▀░░░░▄█▀▒▒
+▒▒▒█░░░░░░▀█░░░░░▄█▀▒▒▒▒
+▒▒▒█▄░░░░░▀█▄▄▄█▀▀▒▒▒▒▒▒
+▒▒▒▒▀▀▀▀▀▀▀▒▒▒▒▒▒▒▒▒▒▒▒▒`
 
 const LOSS = 
 `⠀⠀⠀⣴⣴⡤
@@ -68,7 +83,7 @@ const LOSS =
 ⠰⣷⣿⡀⢐⢿⣿⣿⢻⠀⠀⠀⢠⣿⡿⡤⣴⠄⢀⣀⡀
 ⠘⣿⣿⠂⠈⢸⣿⣿⣸⠀⠀⠀⢘⣿⣿⣀⡠⣠⣺⣿⣷
 ⠀⣿⣿⡆⠀⢸⣿⣿⣾⡇⠀⣿⣿⣿⣿⣿⣗⣻⡻⠿⠁
-⠀⣿⣿⡇⠀⢸⣿⣿⡇⠀⠀⠉⠉⠉⠉⠉⠉⠁`;
+⠀⣿⣿⡇⠀⢸⣿⣿⡇⠀⠀⠉⠉⠉⠉⠉⠉⠁`
 
 function getSubredditPost(subreddit, limit = 400, callback) {
 	request({
@@ -143,12 +158,12 @@ function wordcube(message) {
 	return thing
 }
 
-var MeIrlBot = new Discordie()
-MeIrlBot.connect({token,autorun:true,autoReconnect:true})
+var MeIrlBot = new Discordie({autoReconnect:true})
+MeIrlBot.connect({token,autorun:true})
 
 MeIrlBot.Dispatcher.on('GATEWAY_READY', function () {
 	console.log('MeIrlBot connected.')
-	MeIrlBot.User.setStatus(null, 'zro pls explain')
+	MeIrlBot.User.setStatus({name: 'zro pls explain', type: 0})
 })
 
 var lastPingSent = 0
@@ -159,7 +174,7 @@ MeIrlBot.Dispatcher.on('MESSAGE_CREATE', function (e) {
 	const user = e.message.author
 	const channel = e.message.channel
 	
-	if (user.id == '426776148962181120') return;
+	if (user.id == MeIrlBot.User.id) return;
 	
 	if (/r\/[\w\d_]+/.test(message)) {
 		getSubredditPost(message.match(/r\/([\w\d_]+)/)[1], 100, function (post) {
@@ -197,9 +212,9 @@ MeIrlBot.Dispatcher.on('MESSAGE_CREATE', function (e) {
 		channel.sendMessage('no, ***u***')
 		channel.uploadFile(fs.readFileSync("./me-irl-bot/images/ReverseofReverse.jpg"))
 		
-//	} else if (/press \w to pay respects/i.test(message)) {
-//		var letter = message.match(/press (\w) to pay respects/i)[1].toLowerCase()
-//		e.message.addReaction({id: null, name: `regional_indicator_${letter}`})
+	} else if (/press \w to pay respects/i.test(message)) {
+		var letter = message.match(/press (\w) to pay respects/i)[1].toLowerCase()
+		e.message.addReaction({id: null, name: `regional_indicator_${letter}`})
 		
 	} else if (message == message.toUpperCase() && /\w( \w){3,}/gm.test(message)) {
 		channel.sendMessage(wordcube(message))
@@ -227,14 +242,8 @@ MeIrlBot.Dispatcher.on('MESSAGE_CREATE', function (e) {
 			})
 		}
 	} else if (/delet this/i.test(message)) {
-		channel.fetchMessages(20).then(() => {
-			for (var m of channel.messages) {
-				if (m.author.id == MeIrlBot.id) {
-					return m
-				}
-			}
-			throw 'i don\'t know what you want me to delete'
-		}).then(m => m.delete())
+		getLastBotMessage()
+		.then(m => m.delete())
 		.catch(error)
 	} else if (/needs more jpe?g/i.test(message)) {
 		getFirstImage()
@@ -283,6 +292,16 @@ MeIrlBot.Dispatcher.on('MESSAGE_CREATE', function (e) {
 		}, 30000)
 	}
 	
+	function getLastBotMessage() {
+		return channel.fetchMessages(20).then(() => {
+			for (var m of channel.messages.reverse()) {
+				if (m.author.id == MeIrlBot.User.id) {
+					return m
+				}
+			}
+			throw 'message not found'
+		})
+	}
 	function getFirstImage() {
 		return channel.fetchMessages(20).then(() => {
 			for (var m of channel.messages.reverse()) {
@@ -301,7 +320,7 @@ MeIrlBot.Dispatcher.on('MESSAGE_CREATE', function (e) {
 	}
 	function error(err) {
 		console.log(err)
-		channel.sendMessage(':x: nope :no_good: :triumph::' + err + ' :pensive:')
+		channel.sendMessage(':x: nope :no_good: :triumph: ' + err + ' :pensive:')
 	}
 	function startTyping() {
 		console.log('typing...')
